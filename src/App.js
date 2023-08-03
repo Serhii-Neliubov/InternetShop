@@ -5,26 +5,23 @@ import Categories from "./components/Categories";
 import Sort from "./components/Sort";
 import PizzaBlock from "./components/PizzaBlock";
 
+import pizzas from "./assets/pizzas.json";
+
 function App() {
   return (
-    <div class="wrapper">
+    <div className="wrapper">
       <Header />
-      <div class="content"></div>
-      <div class="container">
-        <div class="content__top">
-          <Categories />
+      <div className="content"></div>
+      <div className="container">
+        <div className="content__top">
+          {/* <Categories /> */}
           <Sort />
         </div>
-        <h2 class="content__title">Все пиццы</h2>
-        <div class="content__items">
-          <PizzaBlock />
-          <PizzaBlock />
-          <PizzaBlock />
-          <PizzaBlock />
-          <PizzaBlock />
-          <PizzaBlock />
-          <PizzaBlock />
-          <PizzaBlock />
+        <h2 className="content__title">Все пиццы</h2>
+        <div className="content__items">
+          {pizzas.map((pizza) => (
+            <PizzaBlock key={pizza.id} {...pizza} />
+          ))}
         </div>
       </div>
     </div>
