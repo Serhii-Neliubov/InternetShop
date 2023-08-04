@@ -1,7 +1,7 @@
 import React from "react";
 function Sort() {
   const [isOpen, setIsOpen] = React.useState(false);
-  const [selected, setSelected] = React.useState("");
+  const [selected, setSelected] = React.useState("популярности");
   const sortList = ["популярности", "цене", "алфавиту"];
   const sortName = sortList[selected];
 
@@ -25,8 +25,12 @@ function Sort() {
             fill="#2C2C2C"
           />
         </svg>
-        <b>Сортировка по:</b>
-        <span onClick={() => setIsOpen(!isOpen)}>{sortName}</span>
+        <b>Сортировка по: </b>
+        {sortName ? (
+          <span onClick={() => setIsOpen(!isOpen)}>{sortName}</span>
+        ) : (
+          <span onClick={() => setIsOpen(!isOpen)}>популярности</span>
+        )}
       </div>
       {isOpen && (
         <div className="sort__popup">
