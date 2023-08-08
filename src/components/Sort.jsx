@@ -1,17 +1,24 @@
 import React from "react";
-function Sort({ value, onClickSort }) {
-  const [isOpen, setIsOpen] = React.useState(false);
-  const sortList = [
-    { name: "популярности ↓", sortProperty: "rating" },
-    { name: "популярности ↑", sortProperty: "-rating" },
-    { name: "цене ↓", sortProperty: "price" },
-    { name: "цене ↑", sortProperty: "-price" },
-    { name: "алфавиту ↓", sortProperty: "title" },
-    { name: "алфавиту ↑", sortProperty: "-title" },
-  ];
+import { useDispatch, useSelector } from "react-redux";
+import { setSort } from "../redux/slices/filterSlice";
 
-  function onClickListHandler(index) {
-    onClickSort(index);
+const sortList = [
+  { name: "popularity ↓", sortProperty: "rating" },
+  { name: "popularity ↑", sortProperty: "-rating" },
+  { name: "price ↓", sortProperty: "price" },
+  { name: "price ↑", sortProperty: "-price" },
+  { name: "alphabet ↓", sortProperty: "title" },
+  { name: "alphabet ↑", sortProperty: "-title" },
+];
+
+function Sort() {
+  const dispatch = useDispatch();
+  const sort = useSelector((state) => state.filter.sort);
+
+  const [isOpen, setIsOpen] = React.useState(false);
+
+  function onClickListHandler(obj) {
+    dispatch(setSort(obj));
     setIsOpen(false);
   }
 
@@ -30,8 +37,8 @@ function Sort({ value, onClickSort }) {
             fill="#2C2C2C"
           />
         </svg>
-        <b>Сортировка по: </b>
-        <span onClick={() => setIsOpen(!isOpen)}>{value.name}</span>
+        <b>Sort by: </b>
+        <span onClick={() => setIsOpen(!isOpen)}>{sort.name}</span>
       </div>
       {isOpen && (
         <div className="sort__popup">
@@ -39,7 +46,7 @@ function Sort({ value, onClickSort }) {
             {sortList.map((obj, index) => (
               <li
                 className={
-                  value.sortProperty === obj.sortProperty ? "active" : null
+                  sort.sortProperty === obj.sortProperty ? "active" : null
                 }
                 onClick={() => onClickListHandler(obj)}
                 key={index}
